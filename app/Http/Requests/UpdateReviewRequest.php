@@ -13,7 +13,7 @@ class UpdateReviewRequest extends FormRequest
             'user_id' => [
                 Rule::exists('users','id'),
             ],
-            'service_id' => [
+            'recipe_id' => [
                 Rule::exists('recipes','id'),
             ],
             'rating' => [

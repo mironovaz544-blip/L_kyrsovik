@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateReviewRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CreateReviewRequest extends FormRequest
             'user_id' => [
                 Rule::exists('users','id'),
             ],
-            'service_id' => [
+            'recipe_id' => [
                 Rule::exists('recipes','id'),
             ],
             'rating' => [

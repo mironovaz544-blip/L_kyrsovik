@@ -19,7 +19,7 @@ public  function label(): string
 public static function options(): array
 {
     return collect(self::cases())
-        ->mapWithKeys(fn($role) => [$role->value = $role->label()])
+        ->mapWithKeys(fn($test) => [$test->value => $test->label()])
         ->toArray();
 }
 

@@ -1,13 +1,8 @@
-@vite(['resources/css/app.css'])
-    <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Пользователи</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Пользователи')
+
+@section('content')
 
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
@@ -15,7 +10,7 @@
         <a href="{{ route('users.index') }}" class="bg-gradient-to-r from-lime-400 to-green-500 hover:from-green-700 hover:to-lime-500 text-white font-medium py-2 px-4 rounded">
             Назад
         </a>
-    </div
+    </div>
 
     @include('components.form_errors')
     <div class="bg-white shadow-md rounded-lg p-6">
@@ -26,6 +21,6 @@
     </div>
 </div>
 
-</body>
-</html>
+@endsection
+
 

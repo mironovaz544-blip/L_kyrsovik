@@ -1,13 +1,8 @@
-@vite(['resources/css/app.css'])
-    <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Пользователи</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Пользователи')
+
+@section('content')
 
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
@@ -37,7 +32,7 @@
         </div>
         <div class="flex justify-between">
             <span class="font-medium text-green-700">Роль:</span>
-            <span class="text-gray-800">{{ $user->role->name() }}</span>
+            <span class="text-gray-800">{{ $user->role->label() }}</span>
         </div>
         <div class="flex justify-between">
             <span class="font-medium text-green-700">Эл.почта:</span>
@@ -50,5 +45,4 @@
     </div>
 </div>
 
-</body>
-</html>
+@endsection

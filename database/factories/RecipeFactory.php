@@ -13,9 +13,9 @@ class RecipeFactory extends Factory
     {
         return [
             'title' =>fake()->words(3, true),
-            'image' => fake()->imageUrl(640, 480, 'food'),
+
             'description' =>fake()->paragraph(),
-            'count' =>fake()->paragraph(),
+            'counts' =>fake()->paragraph(),
             'process' =>fake()->paragraph(),
             'type'=>fake()->randomElement(RecipeTypeEnum::class::cases()),
         ];

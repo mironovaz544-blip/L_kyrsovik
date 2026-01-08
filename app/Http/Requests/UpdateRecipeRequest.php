@@ -12,26 +12,18 @@ class UpdateRecipeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role'=>[
-                Rule::enum(RecipeTypeEnum::class),
-            ],
+
             'title' => [
                 'required',
                 'string',
                 'max:150'
             ],
-            'image' => [
-                'required',
-                'file',
-                'image',
-                'mimes:jpg,jpeg,png'
 
-            ],
             'description' => [
                 'required',
                 'string'
             ],
-            'count' => [
+            'counts' => [
                 'required',
                 'string'
             ],
@@ -39,10 +31,20 @@ class UpdateRecipeRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'type' =>[
-                'required',
-                'string'
+            'type'=>['required',
+                Rule::enum(RecipeTypeEnum::class),],
+
+            'photo' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
             ],
+            'deleted_photo' => [
+                'nullable',
+                'boolean',
+            ],
+
         ];
     }
 }

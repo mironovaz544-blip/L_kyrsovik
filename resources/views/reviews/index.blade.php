@@ -1,13 +1,8 @@
-@vite(['resources/css/app.css'])
-    <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Пользователи</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Пользователи')
+
+@section('content')
 
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-4">
@@ -33,9 +28,9 @@
             @forelse($reviews as $review)
                 <tr class="hover:bg-gray-50">
                     <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->id }}</td>
-                    <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->user_id }}</td>
-                    <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->recipe_id }}</td>
-                    <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->rating }}</td>
+                    <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->user->userFullName() }}</td>
+                    <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->recipe->title }}</td>
+                    <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->rating }} б.</td>
                     <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700">{{ $review->comment }}</td>
                     <td class="border border-gray-200 px-4 py-2 text-sm text-gray-700 flex gap-2">
                         <a href="{{ route('reviews.show', $review) }}" class="bg-gradient-to-r from-lime-400 to-green-600 hover:from-green-600 hover:to-lime-400 text-white py-2 px-4  rounded text-sm">
@@ -55,12 +50,11 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="px-4 py-2 text-center text-gray-500">Нет данных</td>
+                    <td colspan="7" class="px-4 py-2 text-center text-gray-500">Нет данных</td>
                 </tr>
             @endforelse
             </tbody>
         </table>
     </div>
 </div>
-</body>
-</html>
+@endsection

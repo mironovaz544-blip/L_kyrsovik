@@ -22,8 +22,8 @@ class ReviewController extends Controller
     public function create()
     {
         $users = User::all();
-        $services = Recipe::all();
-        return view('reviews.create', compact('users',''));
+        $recipes = Recipe::all();
+        return view('reviews.create', compact('users','recipes'));
 
     }
 

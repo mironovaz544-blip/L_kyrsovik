@@ -1,13 +1,8 @@
-@vite(['resources/css/app.css'])
-    <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Пользователи</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Пользователи')
+
+@section('content')
 
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
@@ -18,8 +13,8 @@
             Назад
         </a>
     </div>
-
     @include('components.form_errors')
+
 
     <div class="bg-white shadow-md rounded-lg p-6">
         <form action="{{ route('reviews.update', $review) }}" method="POST" class="space-y-4">
@@ -29,5 +24,4 @@
         </form>
     </div>
 </div>
-</body>
-</html>
+@endsection

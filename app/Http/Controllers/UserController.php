@@ -32,9 +32,9 @@ class UserController extends Controller
     public function store(CreateUserRequest $request): RedirectResponse
     {
         User::create($request->validated());
-
         return redirect()->route('users.index');
     }
+
 
 
     public function show(User $user): View

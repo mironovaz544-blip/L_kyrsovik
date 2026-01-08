@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    public function userFullName(): string
+    {
+        return $this->name .''. $this->surname;
+    }
 }

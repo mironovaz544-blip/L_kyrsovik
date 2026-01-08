@@ -7,26 +7,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('title',150);
-            $table->string('image')->nullable();
+
             $table->text('description')->nullable();
-            $table->text('count')->nullable();
+            $table->text('counts')->nullable();
             $table->text('process')->nullable();
             $table->unsignedTinyInteger('type')->default(\App\Enums\RecipeTypeEnum::Test->value);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('recipes');
