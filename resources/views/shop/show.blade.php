@@ -1,8 +1,8 @@
 @extends('layouts.shop')
-@section('title', $recipe->title . '- Литвинушка')
+@section('title', $recipe->title . '- Вкусняшка')
 @section('content')
 
-    <div class="bg-white">
+    <div class="bg-green-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             @if(session('success'))
                 <div class="mb-6 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center justify-between">
@@ -19,7 +19,7 @@
             <nav class="flex mb-8" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <a href="{{ route('shop.index') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600">
+                        <a href="{{ route('shop.index') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-green-600">
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                             </svg>
@@ -39,7 +39,7 @@
 
             <div class="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
                 <div class="flex flex-col">
-                    <div class="w-full aspect-w-1 aspect-h-1 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-lg overflow-hidden">
+                    <div class="w-full aspect-w-1 aspect-h-1 bg-gradient-to-br from-lime-200 to-green-500 rounded-lg overflow-hidden">
                         <div class="w-full h-96 flex items-center justify-center">
                             <svg class="h-32 w-32 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
@@ -51,15 +51,13 @@
                 <div class="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
                     <div class="mb-4">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-                          {{ $recipe->type->label() ?? 'Товар' }}
+                          {{ $recipe->type->label() ?? 'Рецепт' }}
                         </span>
                     </div>
 
-                    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ $recipe->title }}</h1>
+                    <h1 class="text-3xl font-bold tracking-tight text-green-500 sm:text-4xl">{{ $recipe->title }}</h1>
 
-
-
-                    <div class="mt-4">
+                    <div class="mt-6">
                         <x-rating-stars :rating="$recipe->averageRating()" :count="$recipe->reviewsCount()" size="lg"/>
                     </div>
 
@@ -70,17 +68,22 @@
                         </div>
                     </div>
 
-                    <div class="mt-10">
-                        <button type="button" class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
-
-                            <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            Добавить в корзину
-                        </button>
-                    </div>
                 </div>
             </div>
+
+                <div class="mt-10">
+                    <h3 class="text-2xl font-medium text-green-500">Набор продуктов:</h3>
+                </div>
+                <div  class="flex items-center mt-8">
+                    <h1 class="text-xl  tracking-tight text-gray-900 sm:text-xl">{{ $recipe->counts }}</h1>
+                </div>
+                <div class="mt-10">
+                    <h3 class="text-2xl font-medium text-green-500">Процесс приготовления:</h3>
+                </div>
+                <div class="mt-8 text-xl  tracking-tight text-gray-600 sm:text-xl">
+                        <h1>{{ $recipe->process }}</h1>
+                    </div>
+
 
             <div class="mt-16 border-t border-gray-200 pt-10">
                 <h2 class="text-2xl font-bold text-gray-900 mb-8">Отзывы покупателей</h2>
@@ -126,7 +129,7 @@
                 <div class="mt-10 bg-gray-50 rounded-lg p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Оставить отзыв</h3>
                     @auth
-                        <form action="{{ route('shop.review.store', $service) }}" method="POST" class="space-y-4">
+                        <form action="{{ route('shop.review.store', $recipe) }}" method="POST" class="space-y-4">
                             @csrf
                             @if($errors->any())
                                 <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
@@ -158,7 +161,7 @@
 
                             </div>
                             <div>
-                                <button type="submit" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
+                                <button type="submit" class="w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
                                     Отправить отзыв
                                 </button>
                             </div>
@@ -168,7 +171,7 @@
                         <div class="text-center py-8">
                             <p class="text-gray-600 mb-4">Чтобы оставить отзыв, необходимо войти в систему</p>
                             <button onclick="openModal('loginModal')"
-                                    class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
+                                    class="inline-block bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
                                 Войти
                             </button>
                         </div>
@@ -177,6 +180,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

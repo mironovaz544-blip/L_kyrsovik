@@ -1,106 +1,177 @@
 @extends('layouts.shop')
 
-@section('title', 'Каталог товаров - Литвинушка')
+@section('title', 'Гланая - Вкусняшка')
 @section('content')
-    <div class="bg-gradient-to-t from-indigo-600 to-purple-600 text-white" xmlns="http://www.w3.org/1999/html">
+    <div class="bg-green-100">
+    <div class="bg-green-100  text-green-500/90 " xmlns="http://www.w3.org/1999/html">
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Добро пожаловать в магазин!
-                </h1>
-                <p class="text-xl md:text-2xl text-indigo-100 mb-8">Качественные товары и услуги по доступным ценам!
-                </p>
-                <div class="max-w-md mx-auto">
-                    <div class="relative">
-                        <input type="text"
-                               placeholder="Поиск товаров..." class="w-full px-4 py-3 rounded lg-text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-300">
-                        <button class="absolute right-2 top-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition duration-150 ease-in-out">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </button>
+            <div class="grid grid-cols-2 gap-10">
+                <div class="...">
+                <img src="{{ asset('/assets/gifs/photo_t.png') }}">
                     </div>
-                </div>
+
+                <div class="col-span ...">
+                <h1 class="text-4xl md:text-5xl font-bold mt-8">После хорошего обеда можно простить кого угодно,</h1>
+                    <h1 class="text-4xl text-gray-700 md:text-5xl font-bold mb-4"> даже своих родственников!</h1>
+                    </div>
             </div>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="flex justify-between items-center mb-8">
-            <div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-2">Мы предоставляем</h2>
-                <p class="text-gray-600">Выберите из нашего широкого ассортимента товаров</p>
-            </div>
-            <div class="flex items-center">
-                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option>Сортировка</option>
-                    <option>По цене (возрастание)</option>
-                    <option>По цене (убывание)</option>
-                    <option>По названию</option>
-                </select>
-            </div>
-        </div>
 
-        @if($recipes->isEmpty())
-            <div class="text-center py-16">
-                <svg class="mx-auto h-24 w-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
-                </svg>
-                <h3 class="mt-4 text-xl font-semibold text-gray-900">Товары не найдены</h3>
-                <p class="mt-2 text-gray-600">В данный момент товары отсутствуют в каталоге</p>
-            </div>
+    	<div class="container bg-green-100 mx-auto px-4 py-10">
 
-        @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-6">
+        	  <div class="flex flex-col items-center">
+            	    <h1 class="text-gray-700 text-4xl font-bold mb-6">На этом сайте</h1>
+            	    <h2 class="text-green-500 text-4xl font-bold mb-10">Вы найдете и научитесь:</h2>
+            	  </div>
 
-                @foreach($recipes as $recipe)
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
-                        <a href="{{ route('shop.show', $recipe) }}" class="block">
-                            <div class="h-48 bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
-                                <svg class="h-20 w-20 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                                </svg>
-                            </div>
+        	  <div class="grid grid-cols-3 gap-10 sm:cols-2">
 
-                            <div class="p-4">
-                                <div class="mb-2">
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-    {{ $recipe->type->label() ?? 'Товар' }}
-        </span>
-                                </div>
-
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                                    {{ $recipe->title }}
-                                </h3>
-                                <div class="mb-3">
-                                    <x-rating-stars :rating="$recipe->averageRating()" :count="$recipe->reviewsCount()" size="sm" />
-                                </div>
-
-                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
-                                    {{ $recipe->description ?? 'Описание отсутствует' }}
-                                </p>
+                  <div class="">
+                      <img src="{{ asset('/assets/gifs/result.png') }}" class="w-32 h-full bg-cover opacity-0">
+                  </div>
 
 
-                            </div>
-                        </a>
-
-                        <div class="p-4 pt-0">
-                            <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out flex items-center justify-center">
-                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                </svg>
-                                В корзину
-                            </button>
+                <!-- Карточка «Разнообразие блюд» -->
+            	    <div class="bg-white p-6 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
+                        <div class="flex-column mb-4">
+                	      <div class="w-12 h-full">
+                              <img src="{{ asset('/assets/gifs/cuisine_12562852.png') }}">
+                          </div>
+                              <h3 class="text-green-500 text-xl font-bold">Разнообразие блюд</h3>
+                      <p class="text-gray-600 text-xl  ">Больше не придется есть одно и тоже. Вы найдете множество рецептов на самый разный вкус.</p>
                         </div>
-                    </div>
+              </div>
 
-                @endforeach
+                <!-- Карточка «Простота приготовления» -->
+            	    <div class="bg-white p-6 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
+                        <div class="flex-column mb-4">
+                            <div class="w-12 h-full">
+                            <img src="{{ asset('/assets/gifs/img.png') }}">
+                          </div>
+                              <h3 class="text-xl text-green-500 font-bold">Простота приготовления</h3>
+                	      <p class="text-gray-600 text-xl">Благодаря пошаговым описаниям рецептов, осилить их сможет даже новичок в кулинарии. </p>
+                	    </div>
+              </div>
+
+            	    <!-- Карточка «Удобство использования» -->
+                <div class="bg-white p-6 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform  translate-x-1/2">
+                    <div class="flex-column mb-4">
+                        <div class="w-12 h-full">
+                        <img src="{{ asset('/assets/gifs/photo_2026-01-11_18-47-00.jpg') }}">
+                          </div>
+                              <h3 class="text-xl text-green-500 font-bold">Удобство использования</h3>
+                	      <p class="text-gray-600 text-xl">Вам не надо придумывать, что приготовить. Как разнообразить ваше привычное меню на обед!</p>
+                	    </div>
+                </div>
+
+            	    <!-- Карточка «Доступность» -->
+            	    <div class="bg-white p-6 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform  translate-x-1/2">
+                        <div class="flex-column mb-4">
+                            <div class="w-12 h-full">
+                            <img src="{{ asset('/assets/gifs/photo_2026-01-11_18-46-48.jpg') }}">
+                          </div>
+                              <h3 class="text-xl text-green-500 font-bold">Доступность</h3>
+                	      <p class="text-gray-600 text-xl">А ингредиенты для готовки найдутся в любом магазине у дома.</p>
+                	    </div>
+              </div>
+
+
+                      <div class="rounded-xl overflow-hidden w-72 h-full bg-cover translate-x-1 opacity-0">
+                          <img src="{{ asset('/assets/gifs/photo_2026-01-09_23-16-08.jpg') }}">
+                      </div>
+            	  </div>
+        </div>
+
+
+        <div class="container mx-auto px-4 py-10">
+            <!-- Заголовок -->
+            <div class="mb-10">
+                <button class="bg-green-500 text-white px-6 py-3 rounded-full shadow-xl text-xl">Рецепты и меню на Новый год 2026</button>
+                <h1 class="text-4xl font-bold text-gray-700  mt-4">Что приготовить на Новый год – проверенные рецепты и меню</h1>
             </div>
 
-            @if($recipes->hasPages())
-                <div class="mt-12">
-                    {{ $recipes->links() }}
+            <!-- Grid с блоками преимуществ -->
+            <div class="grid grid-cols-3 gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                <!-- Блок 1: Интересное о кулинарии -->
+                <div class="col-span-2  bg-green-200  rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1 flex flex-row ">
+                        <div class="p-16 ">
+                    <h2 class="text-green-500 text-3xl font-bold mb-2 ">Интересное о кулинарии </h2>
+                    <p class="text-gray-700 text-lg">В Китае распространён особый способ приготовления яиц — их долго варят в пряном отваре с добавлением чая и специй.</p>
+                            <div>
+                                <a href="/articles" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
+                            <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
+                                Подробнее
+                            </button>
+                                </a>
+                            </div>
+                    </div>
+
+                    <img src="{{ asset('/assets/gifs/result_4fcdebc7-1e0f-4254-965c-7d14вe2543я06.png') }}" class="w-72 h-full translate-x-1/6">
+
                 </div>
-            @endif
-        @endif
+
+                <!-- Блок 2: Калькулятор каллорий -->
+                <div class="bg-orange-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
+                    <a href="/calculators">
+                    <h2 class="text-white hover:text-green-500 text-3xl font-bold mb-2">Калькулятор каллорий</h2>
+                    <p class="text-white hover:text-green-500 text-2xl font-bold mb-2">Вы можете расчитать суточную норму каллорий, для любого человека </p>
+                    </a>
+                </div>
+
+                <!-- Блок 3: Кулинарный тест -->
+                <div class="bg-lime-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
+                    <a href="/test">
+                    <h2 class="text-gray-800 hover:text-green-500 text-3xl font-bold mb-2">Кулинарный тест</h2>
+                    <p class="text-gray-800 hover:text-green-500 text-2xl font-bold mt-6">Проверьте свои знания о кулинарии и ингредиентах!</p>
+                    </a>
+                </div>
+
+                <!-- Блок 4: Самые популярные подборки рецептов -->
+                <div class="col-span-2 bg-green-200  rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1 flex flex-row">
+                    <div class="p-16 ">
+                        <h2 class="text-green-500 text-3xl font-bold mb-2 ">Самые популярные подборки рецептов </h2>
+                        <p class="text-gray-700 text-lg">Быстрые и простые рецепты на каждый день для всей семьи.
+
+                        </p>
+                    <div>
+                        <a href="/recept" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
+                        <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
+                            Подробнее
+                        </button>
+                        </a>
+                    </div>
+                    </div>
+
+                    <img src="{{ asset('/assets/gifs/dfiio.png') }}" class="w-72 h-full translate-x-1/6">
+                </div>
+            </div>
+        </div>
+        <button id="scroll-to-top" onclick="scrollToTop()" class=" hidden opacity-0 translate-y-4 fixed bottom-6 right-6 z-50  w-12  h-12  rounded-full bg-green-500 text-white  shadow-lg  hover:bg-green-700  transition-all duration-300  ease-in-out">
+            ↑ </button>
     </div>
+
+
+
+    <script>
+        const btn = document.getElementById('scroll-to-top');
+
+        window.addEventListener('scroll', () => {
+             if (window.pageYOffset > 400) {
+                 btn.classList.remove('hidden', 'opacity-0', 'translate-y-4');
+                 btn.classList.add('opacity-100', 'translate-y-0');
+                 } else {
+                btn.classList.add('hidden', 'opacity-0', 'translate-y-4');
+                btn.classList.remove('opacity-100', 'translate-y-0');
+                 }
+            });
+
+        function scrollToTop() {
+             window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+        </script>
+
+
 @endsection

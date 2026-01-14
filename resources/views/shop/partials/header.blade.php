@@ -1,26 +1,27 @@
-<header class="bg-white shadow-md sticky top-0 z-50">
+<header class="bg-green-100 shadow-md sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 5m:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
+        <div class="flex justify-between items-center h-24">
 
             <div class="flex items-center  space-x-12">
                 <a href="{{ route('shop.index') }}" class="flex items-center">
-                    <div class="h-14 w-24">
-                        <img src="{{ asset('/assets/gifs/3.jpg') }}">
+                    <div class="h-full w-16">
+                        <img src="{{ asset('/assets/gifs/Recipe-575434.svg.png') }}">
                     </div>
-                    <span class=" font-mono font-bold ml-2 text-4xl  text-green-500">Елочка</span>
+                    <span class="  font-bold ml-2 text-4xl  text-green-500 hover:text-green-800">Вкусняшка</span>
                 </a>
             </div>
 
             <div class="hidden md:flex space-x-6">
-                <a href="{{ route('shop.index') }}" class="text-green-500 hover:text-green-600 px-3 py-2 rounded-md
-    text-xl font-medium transition duration-150 ease-in-out">Каталог</a>
+                <a href="/recept"
+                   class="text-green-500 hover:text-green-800  px-3 py-2 rounded-md
+    text-xl font-medium transition duration-150 ease-in-out">Рецепты</a>
 
-                <a href="#" class="text-green-500 hover:text-green-600 px-3 py-2 rounded-md
-    text-xl font-medium transition duration-150 ease-in-out">О нас</a>
+                <a href="/articles" class="text-green-500 hover:text-green-800 px-3 py-2 rounded-md
+    text-xl font-medium transition duration-150 ease-in-out">Статьи</a>
 
-                <a href="#" class="text-green-500 hover:text-green-600 px-3 py-2 rounded-md
-    text-xl font-medium transition duration-150 ease-in-out">Контакты</a>
-            </div>
+                <a href="/calculators" class="text-green-500 hover:text-green-800 px-3 py-2 rounded-md
+    text-xl font-medium transition duration-150 ease-in-out">Калькулятор</a>
+
 
             <div class="flex items-center space-x-4">
                 @auth
@@ -55,7 +56,7 @@
 
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open"
-                                class="flex items-center text-green-500 hover:text-green-600 px-3 py-2 rounded-md text-xl font-medium transition duration-150 ease-in-out">
+                                class="flex items-center text-green-500 hover:text-green-800 px-3 py-2 rounded-md text-xl font-medium transition duration-150 ease-in-out">
                             <svg class="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
@@ -76,17 +77,7 @@
                     </div>
 
                 @endauth
-                <button class="relative p-2 text-green-500 hover:text-green-600 transition duration-150 ease-in-out">
-                    <a href="/cart">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                        <span  class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none
-                    text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                        0
-                    </span>
-                    </a>
-                </button>
+            </div>
             </div>
         </div>
     </div>

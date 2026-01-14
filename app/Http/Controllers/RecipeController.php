@@ -20,7 +20,7 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::with('mainPhoto')
             ->orderBy('created_at', 'desc')
-            ->paginate(15);
+            ->paginate(5);
 
         return view('recipes.index', compact('recipes'));
     }
