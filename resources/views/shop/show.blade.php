@@ -41,9 +41,13 @@
                 <div class="flex flex-col">
                     <div class="w-full aspect-w-1 aspect-h-1 bg-gradient-to-br from-lime-200 to-green-500 rounded-lg overflow-hidden">
                         <div class="w-full h-96 flex items-center justify-center">
-                            <svg class="h-32 w-32 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                            </svg>
+                            @if($recipe->detail_image_url)
+                                <img src="{{ $recipe->detail_image_url }}" alt="{{ $recipe->title }}" class="w-full h-full object-cover">
+                            @else
+                                <svg class="h-32 w-32 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4av10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                </svg>
+                            @endif
                         </div>
                     </div>
                 </div>

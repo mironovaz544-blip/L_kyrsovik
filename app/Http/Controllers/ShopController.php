@@ -23,34 +23,30 @@ class ShopController extends Controller
     public function recept(Request $request): View
     {
         $query = Recipe::withCount('reviews')->with('reviews');
-        $sort = $request->input('sort');
 
-
-        if ($sort === 'type_asc') {
-            $query->orderBy('type', 'asc');
-        } elseif ($sort === 'type_desc') {
-            $query->orderBy('type', 'desc');
+        switch ($request->input('sort')) {
+            case 'type_asc':
+                $query->orderBy('type', 'asc');
+                break;
+            case 'type_desc':
+                $query->orderBy('type', 'desc');
+                break;
+            case 'title_asc':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'rating_desc':
+                $query->orderByRaw('(SELECT AVG(rating) FROM reviews WHERE reviews.recipe_id = recipes.id) DESC');
+                break;
+            case 'rating_asc':
+                $query->orderByRaw('(SELECT AVG(rating) FROM reviews WHERE reviews.recipe_id = recipes.id) ASC');
+                break;
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
         }
-
-        if ($sort === 'title_asc') {
-            $query->orderBy('title', 'asc');
-        } elseif ($sort === 'title_desc') {
-            $query->orderBy('title', 'desc');
-        }
-
-        if ($sort === 'rating_asc') {
-            $query->orderBy('rating', 'asc');
-        } elseif ($sort === 'rating_desc') {
-            $query->orderBy('rating', 'desc');
-        }
-
-        $results = $query->get();
 
         $recipes = $query->paginate(9);
-        //$recipes = Recipe::withCount('reviews')
-         //   ->with('reviews')
-          //  ->orderBy('created_at', 'desc')
-           // ->paginate(9);
+
         return view('shop.recept', compact('recipes'));
     }
 

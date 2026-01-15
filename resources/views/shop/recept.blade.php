@@ -6,11 +6,11 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h2 class="text-3xl font-bold text-green-500 mb-2">Мы предоставляем</h2>
-                <p class="text-gray-600">Выберите из нашего широкого ассортимента рецептов</p>
+                <h2 class="text-4xl font-bold text-green-500 mb-2">Мы предоставляем</h2>
+                <p class="text-gray-600 text-xl">Выберите из нашего широкого ассортимента рецептов</p>
             </div>
             <div class="flex items-center">
-                <form action="{{ route('recept.index') }}" method="GET">
+                <form action="{{ request()->url() }}" method="GET">
                     @csrf
                 <select name="sort"
                         class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -42,9 +42,13 @@
                     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
 
                             <div class="h-48 bg-gradient-to-br from-lime-200 to-green-500 flex items-center justify-center">
-                                <svg class="h-20 w-20 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                                </svg>
+                                @if($recipe->thumbnail_url)
+                                    <img src="{{ $recipe->thumbnail_url }}" alt="{{ $recipe->title }}" class="w-full h-full object-cover">
+                                @else
+                                    <svg class="h-20 w-20 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                    </svg>
+                                @endif
                             </div>
 
                             <div class="p-4">

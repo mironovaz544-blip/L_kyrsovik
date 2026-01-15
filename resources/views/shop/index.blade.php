@@ -12,8 +12,8 @@
                     </div>
 
                 <div class="col-span ...">
-                <h1 class="text-4xl md:text-5xl font-bold mt-8">После хорошего обеда можно простить кого угодно,</h1>
-                    <h1 class="text-4xl text-gray-700 md:text-5xl font-bold mb-4"> даже своих родственников!</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mt-8">"После хорошего обеда можно простить кого угодно,</h1>
+                    <h1 class="text-4xl text-gray-700 md:text-5xl font-bold mb-4"> даже своих родственников!"</h1>
                     </div>
             </div>
         </div>
@@ -116,16 +116,16 @@
                 <!-- Блок 2: Калькулятор каллорий -->
                 <div class="bg-orange-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
                     <a href="/calculators">
-                    <h2 class="text-white hover:text-green-500 text-3xl font-bold mb-2">Калькулятор каллорий</h2>
-                    <p class="text-white hover:text-green-500 text-2xl font-bold mb-2">Вы можете расчитать суточную норму каллорий, для любого человека </p>
+                    <h2 class="text-white hover:text-green-500 text-3xl font-bold mb-2">Калькулятор каллорий
+                   Вы можете расчитать суточную норму каллорий, для любого человека </h2>
                     </a>
                 </div>
 
                 <!-- Блок 3: Кулинарный тест -->
                 <div class="bg-lime-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
                     <a href="/test">
-                    <h2 class="text-gray-800 hover:text-green-500 text-3xl font-bold mb-2">Кулинарный тест</h2>
-                    <p class="text-gray-800 hover:text-green-500 text-2xl font-bold mt-6">Проверьте свои знания о кулинарии и ингредиентах!</p>
+                    <h2 class="text-gray-800 hover:text-green-500 text-3xl font-bold mb-2">Кулинарный тест
+                   проверьте свои знания о кулинарии и ингредиентах!</h2>
                     </a>
                 </div>
 
