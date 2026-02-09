@@ -56,5 +56,10 @@
             </tbody>
         </table>
     </div>
+    @if($reviews->hasPages())
+        <div class="mt-4">
+            {{ $reviews->links() }}
+        </div>
+    @endif
 </div>
 @endsection
