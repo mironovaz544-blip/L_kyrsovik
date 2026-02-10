@@ -42,13 +42,22 @@
 
     <div>
         <label for="type" class="block text-xl font-medium text-green-600">Тип</label>
-        <input value="{{ old('type', $recipe?->type->label()) }}" type="text" id="type" name="type" required
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+
+        <select id="type" name="type" required
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+            <option value="">-- Выберите тип --</option>
+            @foreach(\App\Enums\RecipeTypeEnum::cases() as $type)
+                <option value="{{ $type->value }}"
+                    {{ old('type', $recipe?->type?->value) == $type->value ? 'selected' : '' }}>
+                    {{ $type->label() }}
+                </option>
+            @endforeach
+        </select>
+
         @error('type')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
     </div>
-
 
     @if(isset($recipe) && $recipe->mainPhoto)
         <div>

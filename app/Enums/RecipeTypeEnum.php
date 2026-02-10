@@ -4,24 +4,30 @@ namespace App\Enums;
 
 enum RecipeTypeEnum: int
 {
-case Test = 1;
-case Test2 = 2;
+    case SALADS = 1;
+    case DESSERTS = 2;
+    case MEAT = 3;
+    case FISH = 4;
+    case DRINKS = 5;
 
 
-public  function label(): string
-{
-    return match ($this) {
-        self::Test => 'Салаты',
-        self::Test2 => 'Сладкое',
-    };
-}
-
-public static function options(): array
-{
-    return collect(self::cases())
-        ->mapWithKeys(fn($test) => [$test->value => $test->label()])
-        ->toArray();
-}
 
 
+    public function label(): string
+    {
+        return match ($this) {
+            self::SALADS => 'Салаты',
+            self::DESSERTS => 'Десерты',
+            self::MEAT => 'Мясные блюда',
+            self::FISH => 'Рыбные блюда',
+            self::DRINKS => 'Напитки',
+        };
+    }
+
+    public static function options(): array
+    {
+        return collect(self::cases())
+            ->mapWithKeys(fn($type) => [$type->value => $type->label()])
+            ->toArray();
+    }
 }
