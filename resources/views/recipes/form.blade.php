@@ -45,7 +45,7 @@
 
         <select id="type" name="type" required
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
-            <option value="">-- Выберите тип --</option>
+            <option value="">-- Выберите категорию --</option>
             @foreach(\App\Enums\RecipeTypeEnum::cases() as $type)
                 <option value="{{ $type->value }}"
                     {{ old('type', $recipe?->type?->value) == $type->value ? 'selected' : '' }}>

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RecipeTypeEnum;
 use App\Http\Requests\StoreReviewRequest;
 use App\Models\Recipe;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,40 +14,67 @@ class ShopController extends Controller
     public function index(): View
     {
         $recipes = Recipe::withCount('reviews')
+            ->withAvg('reviews', 'rating')
             ->with('reviews')
             ->orderBy('created_at', 'desc')
             ->paginate(12);
+
         return view('shop.index', compact('recipes'));
     }
 
     public function recept(Request $request): View
     {
-        $query = Recipe::withCount('reviews')->with('reviews');
+        $query = Recipe::query()
+            ->with('mainPhoto')
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews');
 
-        switch ($request->input('sort')) {
-            case 'type_asc':
-                $query->orderBy('type', 'asc');
-                break;
-            case 'type_desc':
-                $query->orderBy('type', 'desc');
-                break;
-            case 'title_asc':
-                $query->orderBy('title', 'asc');
-                break;
-            case 'rating_desc':
-                $query->orderByRaw('(SELECT AVG(rating) FROM reviews WHERE reviews.recipe_id = recipes.id) DESC');
-                break;
-            case 'rating_asc':
-                $query->orderByRaw('(SELECT AVG(rating) FROM reviews WHERE reviews.recipe_id = recipes.id) ASC');
-                break;
-            default:
-                $query->orderBy('created_at', 'desc');
-                break;
+        // Фильтрация по категории
+        if ($request->has('category') && $request->category != '') {
+            $query->where('type', $request->category);
+        }
+
+        // Сортировка
+        if ($request->has('sort') && $request->sort != '') {
+            switch ($request->sort) {
+                case 'type_asc':
+                    $query->orderBy('type');
+                    break;
+                case 'type_desc':
+                    $query->orderByDesc('type');
+                    break;
+                case 'title_asc':
+                    $query->orderBy('title');
+                    break;
+                case 'title_desc':
+                    $query->orderByDesc('title');
+                    break;
+                case 'rating_asc':
+                    $query->orderBy('reviews_avg_rating');
+                    break;
+                case 'rating_desc':
+                    $query->orderByDesc('reviews_avg_rating');
+                    break;
+                case 'created_at_asc':
+                    $query->orderBy('created_at');
+                    break;
+                case 'created_at_desc':
+                    $query->orderByDesc('created_at');
+                    break;
+            }
+        } else {
+            $query->orderByDesc('created_at');
         }
 
         $recipes = $query->paginate(9);
 
-        return view('shop.recept', compact('recipes'));
+        // Получаем количество рецептов по категориям
+        $categoryCounts = [];
+        foreach (RecipeTypeEnum::cases() as $type) {
+            $categoryCounts[$type->value] = Recipe::where('type', $type->value)->count();
+        }
+
+        return view('shop.recept', compact('recipes', 'categoryCounts'));
     }
 
     public function articles(): View
@@ -90,26 +117,23 @@ class ShopController extends Controller
         return view('shop.test');
     }
 
-
-
-
     public function show(Recipe $recipe): View
     {
-        $recipe->load(['reviews.user']);
+        $recipe->load(['reviews.user', 'mainPhoto']);
+        $recipe->loadAvg('reviews', 'rating');
+        $recipe->loadCount('reviews');
+
         return view('shop.show', compact('recipe'));
     }
-    public function storeReview(StoreReviewRequest $request, Recipe $recipe): RedirectResponse
 
+    public function storeReview(StoreReviewRequest $request, Recipe $recipe): RedirectResponse
     {
         $recipe->reviews()->create([
             'user_id' => auth()->id(),
             'rating' => $request->validated('rating'),
             'comment' => $request->validated('comment'),
-
         ]);
 
-        return redirect()->route('shop.show', $recipe)-> with('success', 'Спасибо за ваш отзыв' );
+        return redirect()->route('shop.show', $recipe)->with('success', 'Спасибо за ваш отзыв!');
     }
-
-
 }

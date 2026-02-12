@@ -16,6 +16,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/recept',[ShopController::class,'recept'])->name('recept.index');
+
+
+
 Route::get('/articles',[ShopController::class,'articles'])->name('articles.index');
 Route::get('/contacts',[ShopController::class,'contacts'])->name('contacts.index');
 Route::get('/calculators',[ShopController::class,'calculators'])->name('calculators.index');
