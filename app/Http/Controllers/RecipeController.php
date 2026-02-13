@@ -23,6 +23,8 @@ class RecipeController extends Controller
         // Фильтрация по категории
         if ($request->has('category') && $request->category != '') {
             $query->where('type', $request->category);
+
+
         }
 
         // Сортировка

@@ -11,15 +11,18 @@ use Illuminate\View\View;
 
 class ShopController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $recipes = Recipe::withCount('reviews')
+        // Получаем 6 последних рецептов для отображения на главной (опционально)
+        $latestRecipes = Recipe::query()
+            ->with('mainPhoto')
             ->withAvg('reviews', 'rating')
-            ->with('reviews')
-            ->orderBy('created_at', 'desc')
-            ->paginate(12);
+            ->withCount('reviews')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
 
-        return view('shop.index', compact('recipes'));
+        return view('shop.index', compact('latestRecipes'));
     }
 
     public function recept(Request $request): View
@@ -28,6 +31,26 @@ class ShopController extends Controller
             ->with('mainPhoto')
             ->withAvg('reviews', 'rating')
             ->withCount('reviews');
+
+        // ПОИСК ПО НАЗВАНИЮ И ПЕРВЫМ БУКВАМ
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+
+            // Если поиск по одной букве (поиск по первым буквам)
+            if (mb_strlen($searchTerm) === 1) {
+                $query->where(function($q) use ($searchTerm) {
+                    $q->where('title', 'LIKE', $searchTerm . '%')
+                        ->orWhere('title', 'LIKE', mb_strtolower($searchTerm) . '%')
+                        ->orWhere('title', 'LIKE', mb_strtoupper($searchTerm) . '%');
+                });
+            } else {
+                // Полнотекстовый поиск по названию
+                $query->where(function($q) use ($searchTerm) {
+                    $q->where('title', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
+                });
+            }
+        }
 
         // Фильтрация по категории
         if ($request->has('category') && $request->category != '') {
@@ -68,10 +91,29 @@ class ShopController extends Controller
 
         $recipes = $query->paginate(9);
 
-        // Получаем количество рецептов по категориям
+        // Получаем количество рецептов по категориям (с учетом поиска)
         $categoryCounts = [];
         foreach (RecipeTypeEnum::cases() as $type) {
-            $categoryCounts[$type->value] = Recipe::where('type', $type->value)->count();
+            $categoryQuery = Recipe::where('type', $type->value);
+
+            // Применяем тот же поиск для подсчета в категориях
+            if ($request->has('search') && $request->search != '') {
+                $searchTerm = $request->search;
+                if (mb_strlen($searchTerm) === 1) {
+                    $categoryQuery->where(function($q) use ($searchTerm) {
+                        $q->where('title', 'LIKE', $searchTerm . '%')
+                            ->orWhere('title', 'LIKE', mb_strtolower($searchTerm) . '%')
+                            ->orWhere('title', 'LIKE', mb_strtoupper($searchTerm) . '%');
+                    });
+                } else {
+                    $categoryQuery->where(function($q) use ($searchTerm) {
+                        $q->where('title', 'LIKE', '%' . $searchTerm . '%')
+                            ->orWhere('description', 'LIKE', '%' . $searchTerm . '%');
+                    });
+                }
+            }
+
+            $categoryCounts[$type->value] = $categoryQuery->count();
         }
 
         return view('shop.recept', compact('recipes', 'categoryCounts'));

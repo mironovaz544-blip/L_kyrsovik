@@ -16,6 +16,7 @@
                 </div>
             @endif
 
+            <div class="flex items-center justify-between mb-4">
             <nav class="flex mb-8" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -36,6 +37,14 @@
                     </li>
                 </ol>
             </nav>
+
+                <a href="{{ route('recept.index') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white text-sm font-medium rounded-lg border border-gray-300 transition-colors duration-150">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Назад к рецептам
+                </a>
+            </div>
 
             <div class="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
                 <div class="flex flex-col">
