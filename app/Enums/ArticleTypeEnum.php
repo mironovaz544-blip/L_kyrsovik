@@ -10,8 +10,8 @@ case Nov2 = 2;
     public function label(): string
     {
         return match ($this) {
-            self::Nov => 'Статьи',
-            self::Nov2 => '',
+            self::Nov => 'Новости',
+            self::Nov2 => 'Разное',
 
         };
     }
