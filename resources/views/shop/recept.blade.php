@@ -149,7 +149,8 @@
                     </a>
                     @foreach(\App\Enums\RecipeTypeEnum::cases() as $type)
                         @php
-                            $recipeCount = isset($categoryCounts[$type->value]) ? $categoryCounts[$type->value] : \App\Models\Recipe::where('type', $type->value)->count();
+                            // Используем переданные из контроллера данные
+                            $recipeCount = $categoryCounts[$type->value] ?? 0;
                         @endphp
                         @if($recipeCount > 0)
                             <a href="{{ route('recept.index', array_merge(request()->except('category', 'page'), ['category' => $type->value])) }}"

@@ -4,11 +4,11 @@ namespace App\Enums;
 
 enum RecipeTypeEnum: int
 {
-    case SALADS = 1;
-    case DESSERTS = 2;
-    case MEAT = 3;
-    case FISH = 4;
-    case DRINKS = 5;
+    case Test = 1;
+    case Test2 = 2;
+    case Test3 = 3;
+    case Test4 = 4;
+    case Test5 = 5;
 
 
 
@@ -16,11 +16,11 @@ enum RecipeTypeEnum: int
     public function label(): string
     {
         return match ($this) {
-            self::SALADS => 'Салаты',
-            self::DESSERTS => 'Десерты',
-            self::MEAT => 'Мясные блюда',
-            self::FISH => 'Рыбные блюда',
-            self::DRINKS => 'Напитки',
+            self::Test => 'Салаты',
+            self::Test2 => 'Десерты',
+            self::Test3 => 'Мясные блюда',
+            self::Test4 => 'Рыбные блюда',
+            self::Test5 => 'Напитки',
         };
     }
 

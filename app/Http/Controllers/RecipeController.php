@@ -21,14 +21,12 @@ class RecipeController extends Controller
             ->withCount('reviews');
 
         // Фильтрация по категории
-        if ($request->has('category') && $request->category != '') {
+        if ($request->filled('category')) {
             $query->where('type', $request->category);
-
-
         }
 
         // Сортировка
-        if ($request->has('sort') && $request->sort != '') {
+        if ($request->filled('sort')) {
             switch ($request->sort) {
                 case 'type_asc':
                     $query->orderBy('type');
@@ -43,10 +41,10 @@ class RecipeController extends Controller
                     $query->orderByDesc('title');
                     break;
                 case 'rating_asc':
-                    $query->orderBy('reviews_avg_rating');
+                    $query->orderBy('reviews_avg_rating', 'asc');
                     break;
                 case 'rating_desc':
-                    $query->orderByDesc('reviews_avg_rating');
+                    $query->orderBy('reviews_avg_rating', 'desc');
                     break;
                 case 'created_at_asc':
                     $query->orderBy('created_at');
@@ -54,12 +52,14 @@ class RecipeController extends Controller
                 case 'created_at_desc':
                     $query->orderByDesc('created_at');
                     break;
+                default:
+                    $query->orderByDesc('created_at');
             }
         } else {
             $query->orderByDesc('created_at');
         }
 
-        $recipes = $query->paginate(9);
+        $recipes = $query->paginate(9)->withQueryString();
 
         // Получаем количество рецептов по категориям
         $categoryCounts = [];

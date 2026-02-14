@@ -140,7 +140,7 @@
                     <h2 class="text-green-500 text-3xl font-bold mb-2">Интересное о кулинарии</h2>
                     <p class="text-gray-700 text-lg">В Китае распространён особый способ приготовления яиц — их долго варят в пряном отваре с добавлением чая и специй.</p>
                     <div>
-                        <a href="/articles" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
+                        <a href="/" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
                             <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
                                 Подробнее
                             </button>

@@ -28,6 +28,10 @@
                         {{ __('Отзывы') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('articles.index')" :active="request()->routeIs('reviews.index')">
+                        {{ __('Статьи') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 

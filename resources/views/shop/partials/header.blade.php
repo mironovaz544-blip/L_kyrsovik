@@ -16,7 +16,7 @@
                    class="text-green-500 hover:text-green-800  px-3 py-2 rounded-md
     text-xl font-medium transition duration-150 ease-in-out">Рецепты</a>
 
-                <a href="/articles" class="text-green-500 hover:text-green-800 px-3 py-2 rounded-md
+                <a href="/" class="text-green-500 hover:text-green-800 px-3 py-2 rounded-md
     text-xl font-medium transition duration-150 ease-in-out">Статьи</a>
 
                 <a href="/calculators" class="text-green-500 hover:text-green-800 px-3 py-2 rounded-md

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Article;
 use App\Models\Recipe;
 use App\Models\Review;
 use App\Models\User;
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         Recipe::factory(count: 10)->create();
         Review::factory(10)->create();
+        Article::factory(10)->create();
     }
 }
