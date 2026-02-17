@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\News;
 use App\Models\Recipe;
 use App\Models\Review;
 use App\Models\User;
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         Recipe::factory(count: 10)->create();
         Review::factory(10)->create();
         Article::factory(10)->create();
+        News   ::factory(10)->create();
     }
 }

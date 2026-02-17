@@ -149,6 +149,16 @@ class ShopController extends Controller
         return view('shop.test');
     }
 
+    public function article(): View
+    {
+        // Получаем все статьи с пагинацией
+        $articles = \App\Models\Article::query()
+            ->orderByDesc('created_at')
+            ->paginate(6);
+
+        return view('shop.article', compact('articles'));
+    }
+
     public function show(Recipe $recipe): View
     {
         $recipe->load(['reviews.user', 'mainPhoto']);

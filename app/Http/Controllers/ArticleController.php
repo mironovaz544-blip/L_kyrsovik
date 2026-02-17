@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Articles\PhotoArticle;
 use App\Enums\ArticleTypeEnum;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -31,9 +32,15 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request, PhotoArticle $photoArticle): RedirectResponse
     {
-        $article = Article::create($request->validated());
+        // Получаем валидированные данные без файла
+        $data = $request->validated();
+
+        // Создаем статью
+        $article = Article::create($data);
+
+        // Обрабатываем фото отдельно
         if ($request->hasFile('photo')) {
-            $photoArticle ->uploadPhoto($request->file('photo'),$article, 0);
+            $photoArticle->uploadPhoto($request->file('photo'), $article, 0);
         }
 
         return redirect()->route('articles.index')

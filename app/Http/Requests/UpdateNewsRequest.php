@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\ArticleTypeEnum;
+use App\Enums\NewsTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateArticleRequest extends FormRequest
+class UpdateNewsRequest extends FormRequest
 {
 
     public function rules(): array
@@ -19,17 +19,17 @@ class UpdateArticleRequest extends FormRequest
                 'max:150'
             ],
 
-            'concept' => [
+            'description' => [
                 'required',
                 'string'
             ],
-            'texts' => [
+            'story' => [
                 'required',
                 'string'
             ],
 
             'type'=>['required',
-                Rule::enum(ArticleTypeEnum::class),],
+                Rule::enum(NewsTypeEnum::class),],
 
             'photo' => [
                 'nullable',
@@ -45,3 +45,4 @@ class UpdateArticleRequest extends FormRequest
         ];
     }
 }
+
