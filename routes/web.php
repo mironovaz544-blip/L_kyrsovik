@@ -22,7 +22,7 @@ Route::get('/contacts',[ShopController::class,'contacts'])->name('contacts.index
 Route::get('/calculators',[ShopController::class,'calculators'])->name('calculators.index');
 Route::get('/test',[ShopController::class,'test'])->name('test.index');
 Route::get('/article', [ShopController::class, 'article'])->name('shop.article');
-
+Route::get('/article/{article}', [ShopController::class, 'showArticle'])->name('shop.show-article');
 
 
 

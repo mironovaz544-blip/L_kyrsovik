@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\RecipeTypeEnum;
 use App\Http\Requests\StoreReviewRequest;
 use App\Models\Recipe;
+use App\Models\Article; // Добавлен импорт модели Article
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -152,7 +153,7 @@ class ShopController extends Controller
     public function article(): View
     {
         // Получаем все статьи с пагинацией
-        $articles = \App\Models\Article::query()
+        $articles = Article::query()
             ->orderByDesc('created_at')
             ->paginate(6);
 
@@ -166,6 +167,11 @@ class ShopController extends Controller
         $recipe->loadCount('reviews');
 
         return view('shop.show', compact('recipe'));
+    }
+
+    public function showArticle(Article $article): View
+    {
+        return view('shop.show-article', compact('article'));
     }
 
     public function storeReview(StoreReviewRequest $request, Recipe $recipe): RedirectResponse

@@ -5,7 +5,7 @@
 <div class="space-y-4">
 
     <div>
-        <label for="title" class="block text-xl font-medium text-green-600">Название статьи</label>
+        <label for="title" class="block text-lg font-medium text-gray-700">Название статьи</label>
         <input value="{{ old('title', $article?->title) }}" type="text" id="title" name="title" required
                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
         @error('title')
@@ -14,25 +14,25 @@
     </div>
 
     <div>
-        <label for="concept" class="block text-xl font-medium text-green-600">Описание</label>
-        <input value="{{ old('concept', $article?->concept) }}" type="text" id="concept" name="concept" required
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+        <label for="concept" class="block text-lg font-medium text-gray-700">Описание</label>
+        <textarea id="concept" name="concept" rows="3" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('concept', $article?->concept) }}</textarea>
         @error('concept')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
     </div>
 
     <div>
-        <label for="texts" class="block text-xl font-medium text-green-600">Текст</label>
-        <input value="{{ old('texts', $article?->texts) }}" type="text" id="texts" name="texts" required
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+        <label for="texts" class="block text-lg font-medium text-gray-700">Текст</label>
+        <textarea id="texts" name="texts" rows="6" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('texts', $article?->texts) }}</textarea>
         @error('texts')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
     </div>
 
     <div>
-        <label for="type" class="block text-xl font-medium text-green-600">Тип</label>
+        <label for="type" class="block text-lg font-medium text-gray-700">Тип</label>
 
         <select id="type" name="type" required
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
@@ -52,7 +52,7 @@
 
     @if(isset($article) && $article->mainPhoto)
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">
+            <label class="block text-lg font-medium text-gray-700 mb-2">
                 Текущая фотография
             </label>
             <div class="relative inline-block">
@@ -67,14 +67,13 @@
         </div>
     @endif
     <div>
-        <label for="photo" class="block text-sm font-medium text-black mb-1">
+        <label for="photo" class="block text-lg font-medium text-gray-700 mb-1">
             {{ isset($article) && $article->mainPhoto ? 'Заменить фотографию' : 'Фотография' }}
         </label>
         <input type="file" name="photo" id="photo" accept="image/jpeg, image/jpg, image/png, image/webp"
                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
-        <p class="text-xs text-gray-500 mt-1">JPEG, PNG, WebP,макс. 5MB</p>
+        <p class="text-xs text-gray-500 mt-1">JPEG, PNG, WebP, макс. 5MB</p>
     </div>
-
 
     <div class="flex gap-2">
         <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded">
@@ -83,8 +82,4 @@
         <a href="{{ route('articles.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded">Отмена</a>
     </div>
 
-
-
 </div>
-
-
