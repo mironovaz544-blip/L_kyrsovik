@@ -14,16 +14,22 @@ class ShopController extends Controller
 {
     public function index(Request $request): View
     {
-        // Получаем 6 последних рецептов для отображения на главной
+        // Получаем 4 последних рецептов для отображения на главной
         $latestRecipes = Recipe::query()
             ->with('mainPhoto')
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->orderByDesc('created_at')
-            ->limit(6)
+            ->limit(4) // Изменено с 6 на 4
             ->get();
 
-        return view('shop.index', compact('latestRecipes'));
+        // Получаем последние 5 статей для слайдера
+        $latestArticles = Article::query()
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
+
+        return view('shop.index', compact('latestRecipes', 'latestArticles'));
     }
 
     public function recept(Request $request): View

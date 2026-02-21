@@ -32,9 +32,7 @@
                         {{ __('Статьи') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('newss.index')" :active="request()->routeIs('newss.index')">
-                        {{ __('Новости') }}
-                    </x-nav-link>
+
 
                 </div>
             </div>

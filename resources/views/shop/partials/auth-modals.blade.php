@@ -13,16 +13,24 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <x-form_errors />
             <div>
                 <label for="login-email" class="block text-lg font-medium text-green-600">Е-майл</label>
-                <input id="login-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                <input id="login-email"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('email') border-red-500 @enderror"
                        type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"/>
+                @error('email')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
+
             <div class="mt-4">
                 <label for="login-password" class="block text-lg font-medium text-green-600">Пароль</label>
-                <input id="login-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                <input id="login-password"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('password') border-red-500 @enderror"
                        type="password" name="password" required autocomplete="current-password"/>
+                @error('password')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="block mt-4">
@@ -60,7 +68,7 @@
             <h3 class="text-xl font-semibold text-green-600">Регистрация</h3>
             <button onclick="closeModal('registerModal')" class="text-gray-400 hover:text-gray-600">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"  stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
@@ -68,48 +76,64 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <x-form_errors />
+            <div>
+                <label for="surname" class="block text-lg font-medium text-green-600">Фамилия</label>
+                <input id="surname"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('surname') border-red-500 @enderror"
+                       type="text" name="surname" value="{{ old('surname') }}" required autofocus autocomplete="surname" />
+                @error('surname')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
 
             <div class="mt-4">
                 <label for="name" class="block text-lg font-medium text-green-600">Имя</label>
                 <input id="name"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('name') border-red-500 @enderror"
                        type="text" name="name" value="{{ old('name') }}" required autocomplete="name"/>
-            </div>
-
-            <div>
-                <label for="surname" class="block text-lg font-medium text-green-600">Фамилия</label>
-                <input id="surname"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                       type="text" name="surname" value="{{ old('surname') }}" required autofocus autocomplete="surname" />
+                @error('name')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mt-4">
                 <label for="patronymic" class="block text-lg font-medium text-green-600">Отчество</label>
                 <input id="patronymic"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('patronymic') border-red-500 @enderror"
                        type="text" name="patronymic" value="{{ old('patronymic') }}" required autocomplete="patronymic"/>
+                @error('patronymic')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mt-4">
                 <label for="register-email" class="block text-lg font-medium text-green-600">Е-мейл</label>
                 <input id="register-email"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('email') border-red-500 @enderror"
                        type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
+                @error('email')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mt-4">
                 <label for="register-password" class="block text-lg font-medium text-green-600">Пароль</label>
                 <input id="register-password"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('password') border-red-500 @enderror"
                        type="password" name="password" required autocomplete="new-password" />
+                @error('password')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mt-4">
-                <label for="password_confirmation" class="block text-lg font-medium text-green-600"> Подтвердите пароль</label>
+                <label for="password_confirmation" class="block text-lg font-medium text-green-600">Подтвердите пароль</label>
                 <input id="password_confirmation"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('password_confirmation') border-red-500 @enderror"
                        type="password" name="password_confirmation" required autocomplete="new-password" />
+                @error('password_confirmation')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -119,8 +143,8 @@
             </div>
 
             <div class="mt-4 text-center">
-                <span class="text-sm text-gray-600"> Уже есть аккаунт?</span>
-                <button type="button" onclick="switchModal('registerModal', 'loginModal')" class="text-sm text-green-500 hover: text-green-700 font-semibold">
+                <span class="text-sm text-gray-600">Уже есть аккаунт?</span>
+                <button type="button" onclick="switchModal('registerModal', 'loginModal')" class="text-sm text-green-500 hover:text-green-700 font-semibold">
                     Войти
                 </button>
             </div>
@@ -145,7 +169,7 @@
     }
 
     window.onclick = function (event) {
-        if(event.target.id === 'loginModal' || event.target.id === 'reqisterModal') {
+        if(event.target.id === 'loginModal' || event.target.id === 'registerModal') {  // Исправлено reqisterModal -> registerModal
             closeModal(event.target.id);
         }
     }
@@ -153,26 +177,28 @@
     document.addEventListener('keydown', function (event) {
         if(event.key === 'Escape') {
             closeModal('loginModal');
-            closeModal('registerModal')
+            closeModal('registerModal');
         }
     });
-</script>
 
-@if ($errors->any())
-    <script>
-        const registerFields = ['surname','name','patronymic','password_confirmation'];
-        let isRegisterError = false;
-        @foreach ($errors->keys() as $field)
-        if(registerFields.includes('{{ $field }}')) {
-            isRegisterError = true;
-        }
-        @endforeach
+    // Автоматическое открытие модального окна при наличии ошибок валидации
+    @if ($errors->any())
+    const registerFields = ['name', 'surname', 'patronymic', 'email', 'password', 'password_confirmation'];
+    let hasRegisterError = false;
 
-        if(isRegisterError) {
+    @foreach ($errors->keys() as $field)
+    if (registerFields.includes('{{ $field }}')) {
+        hasRegisterError = true;
+    }
+    @endforeach
+
+    // Даем небольшую задержку для полной загрузки DOM
+    document.addEventListener('DOMContentLoaded', function() {
+        if (hasRegisterError) {
             openModal('registerModal');
-        } @else {
+        } else {
             openModal('loginModal');
         }
-    </script>
-@endif
-
+    });
+    @endif
+</script>

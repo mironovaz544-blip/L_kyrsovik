@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('recipes', RecipeController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('articles', ArticleController::class);
-    Route::resource('newss', NewsController::class);
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

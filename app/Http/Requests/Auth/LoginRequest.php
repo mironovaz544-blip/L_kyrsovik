@@ -21,14 +21,38 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Поле email обязательно для заполнения',
+            'email.string' => 'Email должен быть строкой',
+            'email.email' => 'Введите корректный email адрес',
+
+            'password.required' => 'Поле пароль обязательно для заполнения',
+            'password.string' => 'Пароль должен быть строкой',
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     */
+    public function attributes(): array
+    {
+        return [
+            'email' => 'email',
+            'password' => 'пароль',
         ];
     }
 

@@ -15,8 +15,8 @@
 
     <div>
         <label for="description" class="block text-xl font-medium text-green-600">Описание</label>
-        <input value="{{ old('description', $recipe?->description) }}" type="text" id="description" name="description" required
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+        <textarea id="description" name="description" rows="3" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('description', $recipe?->description) }}</textarea>
         @error('description')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
@@ -24,8 +24,8 @@
 
     <div>
         <label for="counts" class="block text-xl font-medium text-green-600">Состав продуктов</label>
-        <input value="{{ old('counts', $recipe?->counts) }}" type="text" id="counts" name="counts" required
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+        <textarea id="counts" name="counts" rows="4" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('counts', $recipe?->counts) }}</textarea>
         @error('counts')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
@@ -33,8 +33,8 @@
 
     <div>
         <label for="process" class="block text-xl font-medium text-green-600">Процесс приготовления</label>
-        <input value="{{ old('process', $recipe?->process) }}" type="text" id="process" name="process" required
-               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+        <textarea id="process" name="process" rows="6" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('process', $recipe?->process) }}</textarea>
         @error('process')
         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
@@ -81,19 +81,14 @@
         </label>
         <input type="file" name="photo" id="photo" accept="image/jpeg, image/jpg, image/png, image/webp"
                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
-        <p class="text-xs text-gray-500 mt-1">JPEG, PNG, WebP,макс. 5MB</p>
+        <p class="text-xs text-gray-500 mt-1">JPEG, PNG, WebP, макс. 5MB</p>
     </div>
 
-
-<div class="flex gap-2">
-    <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded">
-        {{ isset($recipe) ? 'Обновить' : 'Создать' }}
-    </button>
-    <a href="{{ route('recipes.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded">Отмена</a>
-</div>
-
-
+    <div class="flex gap-2">
+        <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded">
+            {{ isset($recipe) ? 'Обновить' : 'Создать' }}
+        </button>
+        <a href="{{ route('recipes.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded">Отмена</a>
+    </div>
 
 </div>
-
-
