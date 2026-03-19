@@ -59,7 +59,7 @@ class RecipeController extends Controller
             $query->orderByDesc('created_at');
         }
 
-        $recipes = $query->paginate(9)->withQueryString();
+        $recipes = $query->paginate(5)->withQueryString();
 
         // Получаем количество рецептов по категориям
         $categoryCounts = [];

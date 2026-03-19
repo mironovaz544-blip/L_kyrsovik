@@ -31,4 +31,9 @@ class Review extends Model
         return $this->belongsTo(Recipe::class);
     }
 
+    public function advice(): BelongsTo
+    {
+        return $this->belongsTo(Advice::class);
+    }
+
 }

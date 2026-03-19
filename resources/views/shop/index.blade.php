@@ -90,7 +90,7 @@
                         </div>
                     </div>
 
-                    <!-- Кнопки навигации (большие и стильные) -->
+                    <!-- Кнопки навигации -->
                     <button id="prev-slide"
                             class="absolute left-8 top-1/2 -translate-y-1/2 w-16 h-16 bg-white/95 hover:bg-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-3xl disabled:opacity-50 disabled:cursor-not-allowed z-20 group">
                         <svg class="w-8 h-8 text-green-600 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@
                         </svg>
                     </button>
 
-                    <!-- Улучшенные индикаторы -->
+                    <!-- Индикаторы -->
                     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
                         @foreach($latestArticles as $index => $article)
                             <button class="slider-dot w-4 h-4 rounded-full transition-all duration-300 {{ $loop->first ? 'w-16 bg-green-500' : 'bg-white/50 hover:bg-white' }}"
@@ -163,12 +163,96 @@
             </div>
         </div>
 
-        {{-- НОВЫЙ БЛОК: ПОСЛЕДНИЕ ДОБАВЛЕННЫЕ РЕЦЕПТЫ --}}
+        {{-- БЛОК: РЕЦЕПТЫ ОТ ПОЛЬЗОВАТЕЛЕЙ (4 КАРТОЧКИ) --}}
+        @if($userRecipes->isNotEmpty())
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center mb-10">
+                    <h2 class="text-4xl font-bold text-green-500 mb-4">Рецепты от наших пользователей</h2>
+                    <p class="text-gray-600 text-xl">Домашние рецепты, которыми делятся наши читатели</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    @foreach($userRecipes as $recipe)
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:-translate-y-1 flex flex-col h-full">
+                            <div class="h-48 bg-gradient-to-br from-lime-200 to-green-500 flex items-center justify-center relative">
+                                @if($recipe->thumbnail_url)
+                                    <img src="{{ $recipe->thumbnail_url }}" alt="{{ $recipe->title }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-300 to-green-500">
+                                        <svg class="h-20 w-20 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                @endif
+                                <!-- Бейдж "От пользователя" -->
+                                <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm text-green-600 text-xs font-bold px-2 py-1 rounded-full shadow-md flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                    <span>Пользователь</span>
+                                </div>
+                            </div>
+                            <div class="p-4 flex flex-col flex-grow">
+                                <div class="mb-2 flex items-center justify-between">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        {{ $recipe->type?->label() ?? 'Рецепт' }}
+                                    </span>
+                                    @if($recipe->user)
+                                        <span class="text-xs text-gray-500 truncate max-w-[100px]" title="{{ $recipe->user->userFullName() }}">
+                                            {{ $recipe->user->userFullName() }}
+                                        </span>
+                                    @endif
+                                </div>
+                                <h3 class="text-lg font-semibold text-green-600 mb-2 line-clamp-2 h-14">
+                                    {{ $recipe->title }}
+                                </h3>
+                                <p class="text-sm text-gray-600 mb-3 line-clamp-2 h-10">
+                                    {{ Str::limit($recipe->description, 60) }}
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="{{ route('shop.show-user', $recipe) }}"
+                                       class="block w-full text-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-2 px-4 rounded-xl transition duration-200 shadow-md hover:shadow-lg">
+                                        Смотреть рецепт
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-10">
+                    <a href="{{ route('shop.user-recept') }}"
+                       class="inline-flex items-center px-8 py-4 bg-gradient-to-br from-green-400 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out text-lg">
+                        <span>Все рецепты пользователей</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        @else
+            {{-- Если рецептов от пользователей нет --}}
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-green-500 mb-4">Рецепты от пользователей</h2>
+                    <p class="text-gray-600 text-xl mb-8">Пока нет рецептов от наших пользователей</p>
+                    <a href="{{ route('shop.create-advice') }}"
+                       class="inline-flex items-center px-8 py-4 bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out text-lg">
+                        <span>Добавить свой рецепт</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        @endif
+
+        {{-- БЛОК: ПОСЛЕДНИЕ ДОБАВЛЕННЫЕ РЕЦЕПТЫ (ОСНОВНЫЕ) --}}
         @if($latestRecipes->isNotEmpty())
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div class="text-center mb-10">
                     <h2 class="text-4xl font-bold text-green-500 mb-4">Новые рецепты</h2>
-                    <p class="text-gray-600 text-xl">Свежие рецепты, добавленные нашими пользователями</p>
+                    <p class="text-gray-600 text-xl">Свежие и популярные рецепты для вашего вдохновения</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -185,9 +269,9 @@
                             </div>
                             <div class="p-4">
                                 <div class="mb-2">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-gray-700">
-                            {{ $recipe->type?->label() ?? 'Рецепт' }}
-                        </span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-gray-700">
+                                        {{ $recipe->type?->label() ?? 'Рецепт' }}
+                                    </span>
                                 </div>
                                 <h3 class="text-lg font-semibold text-green-500 mb-2 line-clamp-2">
                                     {{ $recipe->title }}
@@ -233,7 +317,6 @@
                     @endforeach
                 </div>
 
-
                 <div class="text-center mt-10">
                     <a href="{{ route('recept.index') }}"
                        class="inline-flex items-center px-8 py-4 bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out text-lg">
@@ -244,79 +327,67 @@
                     </a>
                 </div>
             </div>
-        @else
-            {{-- Если рецептов нет --}}
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div class="text-center">
-                    <h2 class="text-4xl font-bold text-green-500 mb-4">Последние рецепты</h2>
-                    <p class="text-gray-600 text-xl mb-8">Свежие рецепты, добавленные нашими пользователями</p>
-                    <div class="bg-white rounded-lg p-8 shadow-md">
-                        <svg class="h-16 w-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                        </svg>
-                        <p class="text-gray-600 text-lg">Пока нет добавленных рецептов</p>
-                    </div>
-                </div>
-            </div>
         @endif
-    <div class="container mx-auto px-4 py-10">
-        <!-- Заголовок -->
-        <div class="mb-10">
-            <button class="bg-green-500 text-white px-6 py-3 rounded-full shadow-xl text-xl">Рецепты и меню на Новый год 2026</button>
-            <h1 class="text-4xl font-bold text-gray-700 mt-4">Что приготовить на Новый год – проверенные рецепты и меню</h1>
-        </div>
 
-        <!-- Grid с блоками преимуществ -->
-        <div class="grid grid-cols-3 gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-            <!-- Блок 1: Интересное о кулинарии -->
-            <div class="col-span-2 bg-green-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1 flex flex-row">
-                <div class="p-16">
-                    <h2 class="text-green-500 text-3xl font-bold mb-2">Интересное о кулинарии</h2>
-                    <p class="text-gray-700 text-lg">В Китае распространён особый способ приготовления яиц — их долго варят в пряном отваре с добавлением чая и специй.</p>
-                    <div>
-                        <a href="/" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
-                            <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
-                                Подробнее
-                            </button>
-                        </a>
+        {{-- БЛОК С ПОЛЕЗНОЙ ИНФОРМАЦИЕЙ --}}
+        <div class="container mx-auto px-4 py-10">
+            <!-- Заголовок -->
+            <div class="mb-10">
+                <button class="bg-green-500 text-white px-6 py-3 rounded-full shadow-xl text-xl">Рецепты и меню на Новый год 2026</button>
+                <h1 class="text-4xl font-bold text-gray-700 mt-4">Что приготовить на Новый год – проверенные рецепты и меню</h1>
+            </div>
+
+            <!-- Grid с блоками преимуществ -->
+            <div class="grid grid-cols-3 gap-6 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+                <!-- Блок 1: Интересное о кулинарии -->
+                <div class="col-span-2 bg-green-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1 flex flex-row">
+                    <div class="p-16">
+                        <h2 class="text-green-500 text-3xl font-bold mb-2">Интересное о кулинарии</h2>
+                        <p class="text-gray-700 text-lg">В Китае распространён особый способ приготовления яиц — их долго варят в пряном отваре с добавлением чая и специй.</p>
+                        <div>
+                            <a href="/" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
+                                <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
+                                    Подробнее
+                                </button>
+                            </a>
+                        </div>
                     </div>
+                    <img src="{{ asset('/assets/gifs/result_4fcdebc7-1e0f-4254-965c-7d14вe2543я06.png') }}" class="w-72 h-full translate-x-1/6">
                 </div>
-                <img src="{{ asset('/assets/gifs/result_4fcdebc7-1e0f-4254-965c-7d14вe2543я06.png') }}" class="w-72 h-full translate-x-1/6">
-            </div>
 
-            <!-- Блок 2: Калькулятор каллорий -->
-            <div class="bg-orange-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
-                <a href="/calculators">
-                    <h2 class="text-white hover:text-green-500 text-3xl font-bold mb-2">Калькулятор каллорий
-                        Вы можете расчитать суточную норму каллорий, для любого человека</h2>
-                </a>
-            </div>
+                <!-- Блок 2: Калькулятор каллорий -->
+                <div class="bg-orange-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
+                    <a href="/calculators">
+                        <h2 class="text-white hover:text-green-500 text-3xl font-bold mb-2">Калькулятор каллорий
+                            Вы можете расчитать суточную норму каллорий, для любого человека</h2>
+                    </a>
+                </div>
 
-            <!-- Блок 3: Кулинарный тест -->
-            <div class="bg-lime-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
-                <a href="/test">
-                    <h2 class="text-gray-800 hover:text-green-500 text-3xl font-bold mb-2">Кулинарный тест
-                        проверьте свои знания о кулинарии и ингредиентах!</h2>
-                </a>
-            </div>
+                <!-- Блок 3: Кулинарный тест -->
+                <div class="bg-lime-300 p-16 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1">
+                    <a href="/test">
+                        <h2 class="text-gray-800 hover:text-green-500 text-3xl font-bold mb-2">Кулинарный тест
+                            проверьте свои знания о кулинарии и ингредиентах!</h2>
+                    </a>
+                </div>
 
-            <!-- Блок 4: Самые популярные подборки рецептов -->
-            <div class="col-span-2 bg-green-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1 flex flex-row">
-                <div class="p-16">
-                    <h2 class="text-green-500 text-3xl font-bold mb-2">Самые популярные подборки рецептов</h2>
-                    <p class="text-gray-700 text-lg">Быстрые и простые рецепты на каждый день для всей семьи.</p>
-                    <div>
-                        <a href="/recept" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
-                            <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
-                                Подробнее
-                            </button>
-                        </a>
+                <!-- Блок 4: Самые популярные подборки рецептов -->
+                <div class="col-span-2 bg-green-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 ease-out transform hover:translate-x-1 flex flex-row">
+                    <div class="p-16">
+                        <h2 class="text-green-500 text-3xl font-bold mb-2">Самые популярные подборки рецептов</h2>
+                        <p class="text-gray-700 text-lg">Быстрые и простые рецепты на каждый день для всей семьи.</p>
+                        <div>
+                            <a href="/recept" class="text-green-500 hover:text-white transition duration 150 ease-in-out">
+                                <button type="submit" class="mt-8 w-full sm:w-auto bg-gradient-to-br from-lime-200 to-green-500 hover:from-green-600 hover:to-lime-400 text-white font-semibold py-2 px-6 rounded-lg transition duration-150 ease-in-out">
+                                    Подробнее
+                                </button>
+                            </a>
+                        </div>
                     </div>
+                    <img src="{{ asset('/assets/gifs/dfiio.png') }}" class="w-72 h-full translate-x-1/6">
                 </div>
-                <img src="{{ asset('/assets/gifs/dfiio.png') }}" class="w-72 h-full translate-x-1/6">
             </div>
         </div>
-    </div>
 
         <button id="scroll-to-top" onclick="scrollToTop()" class="hidden opacity-0 translate-y-4 fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-green-500 text-white shadow-lg hover:bg-green-700 transition-all duration-300 ease-in-out">
             ↑
@@ -339,7 +410,7 @@
             });
         });
 
-            document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             // Элементы слайдера
             const sliderTrack = document.getElementById('slider-track');
             const prevButton = document.getElementById('prev-slide');
@@ -359,133 +430,133 @@
 
             // Функция обновления слайда
             function updateSlide(index) {
-            if (isTransitioning) return;
+                if (isTransitioning) return;
 
-            isTransitioning = true;
-            currentSlide = index;
+                isTransitioning = true;
+                currentSlide = index;
 
-            // Обновляем позицию
-            sliderTrack.style.transform = `translateX(-${index * 100}%)`;
+                // Обновляем позицию
+                sliderTrack.style.transform = `translateX(-${index * 100}%)`;
 
-            // Обновляем активную точку
-            dots.forEach((dot, i) => {
-            if (i === index) {
-            dot.classList.add('w-16', 'bg-green-500');
-            dot.classList.remove('bg-white/50', 'hover:bg-white');
-        } else {
-            dot.classList.remove('w-16', 'bg-green-500');
-            dot.classList.add('bg-white/50', 'hover:bg-white');
-        }
-        });
+                // Обновляем активную точку
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('w-16', 'bg-green-500');
+                        dot.classList.remove('bg-white/50', 'hover:bg-white');
+                    } else {
+                        dot.classList.remove('w-16', 'bg-green-500');
+                        dot.classList.add('bg-white/50', 'hover:bg-white');
+                    }
+                });
 
-            // Сбрасываем прогресс
-            resetProgress();
+                // Сбрасываем прогресс
+                resetProgress();
 
-            // Разблокируем после завершения анимации
-            setTimeout(() => {
-            isTransitioning = false;
-        }, 500);
-        }
+                // Разблокируем после завершения анимации
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 500);
+            }
 
             // Функция сброса прогресс-бара
             function resetProgress() {
-            progress = 0;
-            updateProgressBar();
-        }
+                progress = 0;
+                updateProgressBar();
+            }
 
             // Функция обновления прогресс-бара
             function updateProgressBar() {
-            const progressBar = document.querySelector('.progress-bar');
-            if (progressBar) {
-            progressBar.style.width = `${progress}%`;
-        }
-        }
+                const progressBar = document.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = `${progress}%`;
+                }
+            }
 
             // Функция запуска прогресс-бара
             function startProgress() {
-            stopProgress();
-            const intervalTime = 50; // Обновляем каждые 50ms
-            const step = (intervalTime / slideDuration) * 100;
+                stopProgress();
+                const intervalTime = 50; // Обновляем каждые 50ms
+                const step = (intervalTime / slideDuration) * 100;
 
-            progressInterval = setInterval(() => {
-            if (!isTransitioning) {
-            progress += step;
-            if (progress >= 100) {
-            progress = 0;
-            nextSlide();
-        }
-            updateProgressBar();
-        }
-        }, intervalTime);
-        }
+                progressInterval = setInterval(() => {
+                    if (!isTransitioning) {
+                        progress += step;
+                        if (progress >= 100) {
+                            progress = 0;
+                            nextSlide();
+                        }
+                        updateProgressBar();
+                    }
+                }, intervalTime);
+            }
 
             function stopProgress() {
-            if (progressInterval) {
-            clearInterval(progressInterval);
-        }
-        }
+                if (progressInterval) {
+                    clearInterval(progressInterval);
+                }
+            }
 
             // Следующий слайд
             function nextSlide() {
-            if (isTransitioning) return;
+                if (isTransitioning) return;
 
-            if (currentSlide < totalSlides - 1) {
-            currentSlide++;
-        } else {
-            currentSlide = 0;
-        }
-            updateSlide(currentSlide);
-        }
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                } else {
+                    currentSlide = 0;
+                }
+                updateSlide(currentSlide);
+            }
 
             // Предыдущий слайд
             function prevSlide() {
-            if (isTransitioning) return;
+                if (isTransitioning) return;
 
-            if (currentSlide > 0) {
-            currentSlide--;
-        } else {
-            currentSlide = totalSlides - 1;
-        }
-            updateSlide(currentSlide);
-        }
+                if (currentSlide > 0) {
+                    currentSlide--;
+                } else {
+                    currentSlide = totalSlides - 1;
+                }
+                updateSlide(currentSlide);
+            }
 
             // Переход к конкретному слайду
             function goToSlide(index) {
-            if (isTransitioning || index === currentSlide) return;
-            updateSlide(index);
-        }
+                if (isTransitioning || index === currentSlide) return;
+                updateSlide(index);
+            }
 
             // Автоплей
             function startAutoPlay() {
-            stopAutoPlay();
-            startProgress();
-        }
+                stopAutoPlay();
+                startProgress();
+            }
 
             function stopAutoPlay() {
-            stopProgress();
-        }
+                stopProgress();
+            }
 
             // Обработчики событий
             nextButton.addEventListener('click', () => {
-            stopAutoPlay();
-            nextSlide();
-            startAutoPlay();
-        });
+                stopAutoPlay();
+                nextSlide();
+                startAutoPlay();
+            });
 
             prevButton.addEventListener('click', () => {
-            stopAutoPlay();
-            prevSlide();
-            startAutoPlay();
-        });
+                stopAutoPlay();
+                prevSlide();
+                startAutoPlay();
+            });
 
             // Обработчики для точек
             dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-            stopAutoPlay();
-            goToSlide(index);
-            startAutoPlay();
-        });
-        });
+                dot.addEventListener('click', () => {
+                    stopAutoPlay();
+                    goToSlide(index);
+                    startAutoPlay();
+                });
+            });
 
             // Останавливаем автоплей при наведении
             const sliderContainer = document.getElementById('article-slider');
@@ -497,28 +568,28 @@
             let touchEndX = 0;
 
             sliderTrack.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            stopAutoPlay();
-        }, { passive: true });
+                touchStartX = e.changedTouches[0].screenX;
+                stopAutoPlay();
+            }, { passive: true });
 
             sliderTrack.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-            startAutoPlay();
-        }, { passive: true });
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+                startAutoPlay();
+            }, { passive: true });
 
             function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
 
-            if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-            nextSlide();
-        } else {
-            prevSlide();
-        }
-        }
-        }
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
+            }
 
             // Запускаем автоплей
             startAutoPlay();

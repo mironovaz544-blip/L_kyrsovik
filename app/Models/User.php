@@ -52,6 +52,11 @@ class User extends Authenticatable
         ];
     }
 
+    // В модели User добавьте:
+    public function advices(): HasMany
+    {
+        return $this->hasMany(Advice::class);
+    }
     public function recipes(): HasMany
     {
         return $this->hasMany(Recipe::class);
@@ -61,7 +66,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+    public function shortName(): string
+    {
+        if ($this->name && $this->surname) {
+            return $this->name . ' ' . mb_substr($this->surname, 0, 1) . '.';
+        }
 
+        return $this->name ?? $this->email ?? 'Пользователь';
+    }
     public function userFullName(): string
     {
         return $this->name .''. $this->surname;

@@ -31,6 +31,9 @@
                     <x-nav-link :href="route('articles.index')" :active="request()->routeIs('reviews.index')">
                         {{ __('Статьи') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('advices.index')" :active="request()->routeIs('reviews.index')">
+                        {{ __('Рецепты от пользователей') }}
+                    </x-nav-link>
 
 
 

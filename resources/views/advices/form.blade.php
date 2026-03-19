@@ -1,0 +1,113 @@
+@php
+    $advice = $advice ?? null; // Это правильно
+@endphp
+
+<div class="space-y-4">
+
+    <div>
+        <label for="title" class="block text-xl font-medium text-green-600">Название рецепта</label>
+        <input value="{{ old('title', $advice?->title) }}" type="text" id="title" name="title" required
+               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+        @error('title')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="description" class="block text-xl font-medium text-green-600">Описание</label>
+        <textarea id="description" name="description" rows="3" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('description', $advice?->description) }}</textarea>
+        @error('description')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="counts" class="block text-xl font-medium text-green-600">Состав продуктов</label>
+        <textarea id="counts" name="counts" rows="4" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('counts', $advice?->counts) }}</textarea>
+        @error('counts')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="process" class="block text-xl font-medium text-green-600">Процесс приготовления</label>
+        <textarea id="process" name="process" rows="6" required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">{{ old('process', $advice?->process) }}</textarea>
+        @error('process')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="type" class="block text-xl font-medium text-green-600">Тип</label>
+
+        <select id="type" name="type" required
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+            <option value="">-- Выберите категорию --</option>
+            @foreach(\App\Enums\AdviceTypeEnum::cases() as $type)
+                <option value="{{ $type->value }}"
+                    {{ old('type', $advice?->type?->value) == $type->value ? 'selected' : '' }}>
+                    {{ $type->label() }}
+                </option>
+            @endforeach
+        </select>
+
+        @error('type')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    {{-- Поле выбора пользователя (только для админки) --}}
+    <div>
+        <label for="user_id" class="block text-xl font-medium text-green-600">Автор рецепта:</label>
+        <select name="user_id" id="user_id" required
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 sm:text-sm">
+            <option value="">-- Выберите автора --</option>
+            @foreach($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ old('user_id', $advice?->user_id) == $user->id ? 'selected' : '' }}>
+                    {{ $user->userFullName() }} (ID: {{ $user->id }})
+                </option>
+            @endforeach
+        </select>
+        @error('user_id')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    @if(isset($advice) && $advice->mainPhoto)
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Текущая фотография
+            </label>
+            <div class="relative inline-block">
+                <img src="{{ $advice->mainPhoto->thumbnail_url }}" alt="Photo" class="w-48 h-32 object-cover rounded">
+                <div class="mt-2">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" name="delete_photo" value="1" class="mr-2">
+                        <span class="text-sm text-red-600">Удалить фотографию</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <div>
+        <label for="photo" class="block text-sm font-medium text-black mb-1">
+            {{ isset($advice) && $advice->mainPhoto ? 'Заменить фотографию' : 'Фотография' }}
+        </label>
+        <input type="file" name="photo" id="photo" accept="image/jpeg, image/jpg, image/png, image/webp"
+               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500">
+        <p class="text-xs text-gray-500 mt-1">JPEG, PNG, WebP, макс. 5MB</p>
+    </div>
+
+    <div class="flex gap-2">
+        <button type="submit" class="bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded">
+            {{ isset($advice) ? 'Обновить' : 'Создать' }}
+        </button>
+        <a href="{{ route('advices.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded">Отмена</a>
+    </div>
+
+</div>
